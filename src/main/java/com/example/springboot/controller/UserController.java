@@ -92,6 +92,13 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @GetMapping("/username/{username}")//按用户名查找返回
+    public Result findOne(@PathVariable String username) {
+        QueryWrapper<User> queryWrapper =new QueryWrapper<>();
+        queryWrapper.eq("username",username);
+        return Result.success(userService.getOne(queryWrapper));
+    }
+
     @GetMapping("/page")//返回页面数据
     public IPage<User> findPage(@RequestParam Integer pageNum,
                                 @RequestParam Integer pageSize,

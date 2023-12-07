@@ -13,7 +13,8 @@ const routes = [//路由配置指的是用户选择什么路径，浏览器就�
     redirect:"/home",//通过redirect属性将根路径/重定向到了/home路径。这意味着当用户访问根路径时，会自动跳转到/home路径，而无需显示根路径的内容。但是这个时候Aside组件和Header组件已经在manage中被渲染了，会一直存在，而user组件由于需要特定路由而不出现
     children: [
       {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
-      {path: 'home', name: '首页', component: () => import('../views/Home.vue'),}
+      {path: 'home', name: '首页', component: () => import('../views/Home.vue'),},
+      {path: 'person', name: '个人信息', component: () => import('../views/Person.vue'),}
     ]
   },
   {

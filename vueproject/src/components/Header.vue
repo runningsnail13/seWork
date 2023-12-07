@@ -16,7 +16,9 @@
                 <span>{{ user.nickname }}</span><i class="el-icon-arrow-down" style="margin-left: 5px"></i>
             </div>
             <el-dropdown-menu v-slot="dropdown" style="width: 100px; text-align: center" >
-                <el-dropdown-item style="font-size: 14px; padding: 5px 0">个人信息</el-dropdown-item>
+                <el-dropdown-item style="font-size: 14px; padding: 5px 0">
+                    <router-link to="/person" style="text-decoration: none" >个人信息</router-link>
+                </el-dropdown-item>
                 <el-dropdown-item style="font-size: 14px; padding: 5px 0">
 <!--                    <router-link to="/login" style="text-decoration: none" >退出</router-link>-->
 <!--                    使用<router-link>标签包裹一个元素时，它会自动为该元素添加点击事件，并处理导航到指定的路由路径。-->

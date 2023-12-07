@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User register(UserDTO userDTO) {
-        User one = getUserInfoRegister(userDTO);
+        User one = getUserInfoUsername(userDTO);
         if (one == null) {//查询无结果
             one = new User();//新建一个
             BeanUtil.copyProperties(userDTO, one, true);
@@ -64,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         return one;
     }
-    private User getUserInfoRegister(UserDTO userDTO) {//根据用户名和密码查询用户信息并返回
+    private User getUserInfoUsername(UserDTO userDTO) {//根据用户名查询用户信息并返回
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", userDTO.getUsername());
         User one;
