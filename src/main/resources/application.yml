@@ -18,4 +18,6 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+files:
+  upload:
+    path: D:/HighSoftFileResources/files/

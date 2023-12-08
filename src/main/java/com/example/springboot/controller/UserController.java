@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,8 +69,13 @@ public class UserController {
     }
 
     @PostMapping// 新增或者更新
-    public boolean save(@RequestBody User user) {
-        return userService.saveOrUpdate(user);
+    public Result save(@RequestBody User user) {
+        if(userService.saveOrUpdate(user)){
+            return Result.success();
+        }
+        else{
+            return Result.error();
+        }
     }
 
     @DeleteMapping("/{id}")//按照id删除
@@ -88,8 +94,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")//按id查找返回
-    public User findOne(@PathVariable Integer id) {
-        return userService.getById(id);
+    public Result findOne(@PathVariable Integer id) {
+        return Result.success(userService.getById(id));
     }
 
     @GetMapping("/username/{username}")//按用户名查找返回
@@ -146,7 +152,7 @@ public class UserController {
 
         // 设置浏览器响应的格式
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        String fileName = URLEncoder.encode("用户信息", "UTF-8");
+        String fileName = URLEncoder.encode("用户信息", StandardCharsets.UTF_8);
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
 
         ServletOutputStream out = response.getOutputStream();
