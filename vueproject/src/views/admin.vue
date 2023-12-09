@@ -1,7 +1,7 @@
 <template>
     <div class="wrapperLogin">
         <div style="margin: 200px auto; background-color: #fff; width: 350px; height: 300px; padding: 20px; border-radius: 10px">
-            <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>用 户 登 录</b></div>
+            <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>管 理 员 登 录</b></div>
             <el-form :model="user" :rules="rules" ref="userForm">
                 <el-form-item prop="username">
                     <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="user.username"></el-input>
@@ -11,9 +11,6 @@
                 </el-form-item>
                 <el-form-item style="margin: 10px 0; text-align: right">
                     <el-button type="primary" size="small"  autocomplete="off" @click="login">登录</el-button>
-                    <el-button type="warning" size="small"  autocomplete="off" @click="register">注册</el-button>
-                    <el-button type="info" size="small"  autocomplete="off" @click="visitor">访客</el-button>
-                    <el-button type="info" size="small"  autocomplete="off" @click="$router.push('/admin')">管理员登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -22,13 +19,9 @@
 
 <script>
 export default {
-    name: "Login",
+    name: "admin",
     data() {
         return {
-            visitorMsg:{//访客
-                username: "default",
-                password: "default"
-            },
             user: {},
             rules: {
                 username: [
@@ -79,7 +72,7 @@ export default {
 <style>
 .wrapperLogin {
     height: 100vh;
-    background-image: linear-gradient(to bottom right, #FC466B , #3F5EFB);
+    background-image: linear-gradient(to bottom right, #58fc46, #3F5EFB);
     overflow: hidden;
 }
 </style>

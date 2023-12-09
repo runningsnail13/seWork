@@ -101,7 +101,7 @@ public class UserController {
     @GetMapping("/username/{username}")//按用户名查找返回
     public Result findOne(@PathVariable String username) {
         QueryWrapper<User> queryWrapper =new QueryWrapper<>();
-        queryWrapper.eq("username",username);
+        queryWrapper.eq("user_name",username);
         return Result.success(userService.getOne(queryWrapper));
     }
 
@@ -114,15 +114,15 @@ public class UserController {
         IPage<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (!"".equals(username)) {
-            queryWrapper.like("username", username);
+            queryWrapper.like("user_name", username);
         }
         if (!"".equals(email)) {
-            queryWrapper.like("email", email);
+            queryWrapper.like("user_email", email);
         }
         if (!"".equals(address)) {
-            queryWrapper.like("address", address);
+            queryWrapper.like("user_address", address);
         }
-        queryWrapper.orderByDesc("id");
+//        queryWrapper.orderByDesc("user_id");
         return userService.page(page, queryWrapper);
     }
 

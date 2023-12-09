@@ -26,7 +26,7 @@
         <el-submenu index="2">
             <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span slot="title">系统管理</span>
+                <span slot="title">管理</span>
             </template>
             <el-menu-item index="/user">
                 <i class="el-icon-s-custom"></i>

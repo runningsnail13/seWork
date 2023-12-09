@@ -35,6 +35,11 @@ const routes = [//路由配置指的是用户选择什么路径，浏览器就�
     path: '/register',
     name: 'register',
     component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/admin.vue')
   }
 ]
 

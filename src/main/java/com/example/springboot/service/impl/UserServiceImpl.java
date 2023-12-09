@@ -53,8 +53,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private User getUserInfo(UserDTO userDTO) {//根据用户名和密码查询用户信息并返回
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", userDTO.getUsername());
-        queryWrapper.eq("password", userDTO.getPassword());
+        queryWrapper.eq("user_name", userDTO.getUsername());
+        queryWrapper.eq("user_password", userDTO.getPassword());
         User one;
         try {
             one = getOne(queryWrapper); // 从数据库查询用户信息
@@ -66,7 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
     private User getUserInfoUsername(UserDTO userDTO) {//根据用户名查询用户信息并返回
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", userDTO.getUsername());
+        queryWrapper.eq("user_name", userDTO.getUsername());
         User one;
         try {
             one = getOne(queryWrapper); // 从数据库查询用户信息

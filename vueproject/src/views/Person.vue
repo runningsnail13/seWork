@@ -1,5 +1,5 @@
 <template>
-    <el-card style="width: 500px;">
+    <el-card style="width: 700px;">
         <el-form label-width="80px" size="small">
             <el-upload
                 class="avatar-uploader"
@@ -26,7 +26,14 @@
             <el-form-item label="地址">
                 <el-input v-model="form.address" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="学校">
+                <el-input v-model="form.school" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="年龄">
+                <el-input v-model="form.age" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item>
+                <el-button type="primary" @click="$router.push('/')">退 出</el-button>
                 <el-button type="primary" @click="save">确 定</el-button>
             </el-form-item>
         </el-form>
@@ -62,6 +69,7 @@ export default {
                     this.getUser().then(res => {
                         localStorage.setItem("user", JSON.stringify(res))
                     })
+
                 } else {
                     this.$message.error("操作失败")
                 }

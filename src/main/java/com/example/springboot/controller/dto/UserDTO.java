@@ -29,4 +29,17 @@ public class UserDTO {//负责统一前后端数据的交互，User对象用于�
 
     private String avatarUrl;
 
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 年龄
+     */private String age;
+
+    /**
+     * 学校
+     */private String school;
+
 }

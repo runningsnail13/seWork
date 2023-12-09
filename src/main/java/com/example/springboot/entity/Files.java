@@ -1,22 +1,32 @@
 package com.example.springboot.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("sys_file")
+@TableName("video_table")
 public class Files {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "resource_id", type = IdType.AUTO)
     private Integer id;
+
+    @TableField(value = "topic")
     private String name;
+
     private String type;
+
     private Long size;
+
+    @TableField(value = "video_url")
     private String url;
+
     private String md5;
     private Boolean isDelete;
+
+    @TableField(value = "resource_state")
     private Boolean enable;
 
 }
