@@ -10,6 +10,10 @@ spring:
       url: jdbc:mysql://localhost:3306/shortvideoplatform?serverTimezone=GMT%2b8
       username: root
       password: 1906511392
+  servlet:
+    multipart:
+      max-file-size: 130MB
+      max-request-size: 130MB
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 #  configuration:
@@ -22,3 +26,6 @@ mybatis-plus:
 files:
   upload:
     path: D:/HighSoftFileResources/files/
+
+
+

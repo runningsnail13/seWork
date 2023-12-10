@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div style="margin: 10px 0">
             <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-search" v-model="username"></el-input>
             <!--            suffix-icon="el-icon-search" 是一个图标，可以去官网search; 这里v-model是一个数据绑定，它将框里面输入的内容赋值给username-->
@@ -35,6 +35,15 @@
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="id" label="ID" width="80">
             </el-table-column>
+            <el-table-column prop="avatarUrl" label="头像" width="140">
+                <template v-slot="scope">
+                    <img :src="scope.row.avatarUrl" alt=""
+                         style="width: 30px; border-radius: 50%; position: relative; top: 10px; right: 5px"
+                         v-if="scope.row.avatarUrl && scope.row.avatarUrl !== ''">
+                    <i class="el-icon-user" v-else></i>
+                </template>
+            </el-table-column>
+
             <el-table-column prop="username" label="用户名" width="140" >
             </el-table-column>
             <el-table-column prop="nickname" label="昵称" width="120">

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import com.example.springboot.common.Constants;
 import com.example.springboot.common.Result;
 import com.example.springboot.entity.Files;
 import com.example.springboot.mapper.FileMapper;
@@ -135,6 +136,15 @@ public class FileController {
         return Result.success();
     }
 
+    @GetMapping("/search/{id}")
+    public Result searchById(@PathVariable Integer id) {
+        Files files = fileMapper.selectById(id);
+        if(files != null)
+            return Result.success(files);
+        else
+            return Result.error(Constants.CODE_600,"找不到该视频");
+    }
+
     @PostMapping("/del/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         // select * from sys_file where id in (id,id,id...)
@@ -169,6 +179,19 @@ public class FileController {
         }
         return Result.success(fileMapper.selectPage(new Page<>(pageNum, pageSize), queryWrapper));
     }
+    @GetMapping("/findvideo")
+    public Result findAllVideo(@RequestParam(defaultValue = "") String name) {
 
+        QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
+        // 查询未删除的记录
+        queryWrapper.eq("is_delete", false);
+        queryWrapper.eq("resource_state", true);//审核通过的视频
+        queryWrapper.eq("type", "mp4");//是视频
+        queryWrapper.orderByDesc("id");
+        if (!"".equals(name)) {
+            queryWrapper.like("name", name);
+        }
+        return Result.success(fileMapper.selectList(queryWrapper));
+    }
 
 }

@@ -60,26 +60,26 @@ class ${table.controllerName}#if(${superControllerClass}) : ${superControllerCla
     @PostMapping("/del/batch")
     public boolean deleteBatch(@RequestBody List<Integer> ids) {
         return ${table.entityPath}Service.removeByIds(ids);
-        }
+    }
 
     @GetMapping
     public List<${entity}> findAll() {
         return ${table.entityPath}Service.list();
-        }
+    }
 
     @GetMapping("/{id}")
     public ${entity} findOne(@PathVariable Integer id) {
         return ${table.entityPath}Service.getById(id);
-        }
+    }
 
     @GetMapping("/page")
     public Page<${entity}> findPage(@RequestParam Integer pageNum,
     @RequestParam Integer pageSize) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         return ${table.entityPath}Service.page(new Page<>(pageNum, pageSize), queryWrapper);
-        }
+    }
 
-        }
+    }
 
 #end

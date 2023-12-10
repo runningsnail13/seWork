@@ -1,5 +1,5 @@
 <template>
-    <el-container style="min-height: 100vh">
+    <el-container style="min-height: 100vh" class="wrapperBody">
 
         <el-aside :width="sideWidth + 'px'" style="box-shadow: 2px 0 6px rgb(0 21 41 / 35%);">
             <Aside :isCollapse="isCollapse" :logoTextShow="logoTextShow" />
@@ -56,3 +56,11 @@ export default {
 }
 
 </script>
+
+<style>
+.wrapperBody {
+    height: 100vh;
+    background: linear-gradient(to right, #E6E6FA 60%, #FFB6C1);
+    overflow: hidden;
+}
+</style>

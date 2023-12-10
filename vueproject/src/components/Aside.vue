@@ -1,8 +1,8 @@
 <template>
     <el-menu :default-openeds="['1', '3']" style="min-height: 100%; overflow-x: hidden"
-             background-color="rgb(48,65,86)"
-             text-color="#fff"
-             active-text-color="#ffd04b"
+             background-color="rgb(230, 230, 250)"
+             text-color="#000"
+             active-text-color="#000"
              :collapse-transition="false"
              :collapse="isCollapse"
              router
@@ -12,8 +12,8 @@
         如果不加冒号，则属性值会被视为字符串直接赋值给该属性，不会进行解析或绑定。-->
         <div style="height: 60px; line-height: 60px; text-align: center">
             <img src="../assets/logo.png" alt="" style="width: 20px;position: relative;top: 5px;margin-right: 5px">
-            <b style="color: #cccccc" v-show="logoTextShow">
-                后台管理系统
+            <b style="color: #000000" v-show="logoTextShow">
+                短视频平台
             </b>
         </div>
         <el-menu-item index="/home">
