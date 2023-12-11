@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("//coin")
-        public class CoinController {
+public class CoinController {
     
     @Resource
     private ICoinService coinService;
@@ -61,5 +61,5 @@ import org.springframework.web.bind.annotation.RestController;
         return coinService.page(new Page<>(pageNum, pageSize), queryWrapper);
     }
 
-    }
+}
 

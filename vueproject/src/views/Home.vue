@@ -19,26 +19,37 @@
                           :options="playerOptions">
             </video-player>
         </div>
-        <el-badge :value="12" class="itemIcon">
-            <el-button  icon="el-icon-arrow-up" size="small" circle></el-button>
+        <el-badge :value="likeNumber" class="itemIcon">
+            <el-tooltip content="点赞数" placement="bottom" effect="light">
+            <el-button  icon="el-icon-arrow-up" size="small" circle  @click="likeVideo"></el-button>
+            </el-tooltip>
         </el-badge>
-        <el-badge :value="3" class="itemIcon">
+        <el-badge :value="coinNumber" class="itemIcon">
+            <el-tooltip content="投币数" placement="bottom" effect="light">
             <el-button  icon="el-icon-medal-1" size="small" circle></el-button>
+            </el-tooltip>
         </el-badge>
-        <el-badge :value="1" class="itemIcon" type="primary">
+        <el-badge :value="starNumber" class="itemIcon" type="primary">
+            <el-tooltip content="收藏数" placement="bottom" effect="light">
             <el-button icon="el-icon-star-off" size="small" circle></el-button>
+            </el-tooltip>
         </el-badge>
         <el-badge :value="2" class="itemIcon" type="warning">
+            <el-tooltip content="评论" placement="bottom" effect="light">
             <el-button  icon="el-icon-chat-dot-round" size="small" circle></el-button>
-
+            </el-tooltip>
         </el-badge>
 
         <el-badge  class="itemIcon" type="primary" >
+            <el-tooltip content="下一条" placement="bottom" effect="light">
             <el-button  icon="el-icon-back" size="small" @click="preVideo"></el-button>
+            </el-tooltip>
         </el-badge>
 
         <el-badge  class="itemIcon" type="warning">
+            <el-tooltip content="上一条" placement="bottom" effect="light">
             <el-button  icon="el-icon-right" size="small" @click="nextVideo"></el-button>
+            </el-tooltip>
         </el-badge>
 
     </div>
@@ -57,6 +68,10 @@ export default {
     },
     data(){
         return{
+            user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+            likeNumber: 0,
+            coinNumber: 0,
+            starNumber: 0,
             length: 0,
             videos: [],
             index: 0,
@@ -90,6 +105,10 @@ export default {
             this.videos=res.data
             this.length=this.videos.length
             this.playerOptions.sources[0].src = this.videos[this.index].url
+            this.likeNumber=this.videos[this.index].likeNumber
+            this.starNumber=this.videos[this.index].starNumber
+            this.coinNumber=this.videos[this.index].coinNumber
+            console.log(this.user)
         })
     },
     methods :{
@@ -104,6 +123,25 @@ export default {
                 this.index=this.index+1
                 this.playerOptions.sources[0].src = this.videos[this.index].url
             }
+        },
+        likeVideo(){//点赞功能，需要核查
+            this.request.get("http://localhost:9090/like/tick",{
+                params: {
+                    resourceId: this.videos[this.index].id,
+                    userId: this.user.id
+                }
+            }).then(res => {
+                if(res.code === '200'){
+                    this.request.post("http://localhost:9090/file/likevideo/"+this.videos[this.index].id)
+                    this.videos[this.index].likeNumber = this.videos[this.index].likeNumber+1;
+                    this.likeNumber=this.likeNumber+1;
+                    this.$message.success("点赞成功")
+                }
+                else{
+                    this.$message.error("您已经点过赞了")
+                }
+            })
+
         }
     }
 

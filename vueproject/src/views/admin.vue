@@ -43,6 +43,7 @@ export default {
                         if(res.code === '200') {
                             localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
                             this.$router.push("/")  // 切换路由到主页
+                            this.$router.push("/file")
                             this.$message.success("登录成功")
                         } else {
                             this.$message.error(res.msg)

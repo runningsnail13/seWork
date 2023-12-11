@@ -17,7 +17,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-  public class Like implements Serializable {
+  public class Likes implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @MppMultiId

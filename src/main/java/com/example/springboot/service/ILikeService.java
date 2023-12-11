@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
-import com.example.springboot.entity.Like;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.springboot.entity.Likes;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author snail
  * @since 2023-12-09
  */
-public interface ILikeService extends IService<Like> {
+public interface ILikeService extends IService<Likes> {
 
 }

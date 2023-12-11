@@ -6,29 +6,22 @@
             <el-button type="warning" @click="reset">重置</el-button>
         </div>
         <div style="margin: 10px 0">
-            <el-upload action="http://localhost:9090/file/upload" :show-file-list="false" :on-success="handleFileUploadSuccess" style="display: inline-block">
-                <el-button type="primary" class="ml-5">上传文件 <i class="el-icon-top"></i></el-button>
+            <el-upload action="http://localhost:9090/file/upload-user"
+                       :show-file-list="false" :on-success="handleFileUploadSuccess"
+                       :data="{ id: userid }"
+                       style="display: inline-block">
+                <el-button type="primary" class="ml-5">我要投稿 <i class="el-icon-top"></i></el-button>
             </el-upload>
-            <el-popconfirm
-                    class="ml-5"
-                    confirm-button-text='确定'
-                    cancel-button-text='我再想想'
-                    icon="el-icon-info"
-                    icon-color="red"
-                    title="您确定批量删除这些数据吗？"
-                    @confirm="delBatch"
-            >
-                <template #reference>
-                <el-button type="danger" >批量删除 <i class="el-icon-remove-outline"></i></el-button>
-                </template>
-            </el-popconfirm>
 
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55"></el-table-column>
+<!--            <el-table-column type="selection" width="55"></el-table-column>-->
             <el-table-column prop="id" label="ID" width="80"></el-table-column>
-            <el-table-column prop="name" label="文件名称"></el-table-column>
-            <el-table-column prop="type" label="文件类型"></el-table-column>
+            <el-table-column prop="name" label="视频标题"></el-table-column>
+            <el-table-column prop="type" label="视频类型"></el-table-column>
+            <el-table-column prop="likeNumber" label="点赞数"></el-table-column>
+            <el-table-column prop="coinNumber" label="投币数"></el-table-column>
+            <el-table-column prop="starNumber" label="收藏数"></el-table-column>
             <el-table-column prop="size" label="文件大小(kb)"></el-table-column>
             <el-table-column label="预览">
                 <template v-slot="scope">
@@ -40,9 +33,11 @@
                     <el-button type="primary" @click="download(scope.row.url)">下载</el-button>
                 </template>
             </el-table-column>
-            <el-table-column label="启用">
+            <el-table-column label="审核状态">
                 <template v-slot:default="scope">
-                    <el-switch v-model="scope.row.enable" active-color="#13ce66" inactive-color="#ccc" @change="changeEnable(scope.row)"></el-switch>
+                    <el-button v-model="scope.row.enable" v-if="scope.row.enable === true" type="success">通过</el-button>
+                    <el-button v-model="scope.row.enable" v-else type="warning">未通过</el-button>
+<!--                    <el-switch v-model="scope.row.enable" active-color="#13ce66" inactive-color="#ccc" @change="changeEnable(scope.row)"></el-switch>-->
                 </template>
             </el-table-column>
             <el-table-column label="操作"  width="200" align="center">
@@ -57,7 +52,7 @@
                             @confirm="del(scope.row.id)"
                     >
                         <template #reference>
-                            <el-button type="danger" >删除 <i class="el-icon-remove-outline"></i></el-button>
+                            <el-button type="danger" >下架该视频 <i class="el-icon-remove-outline"></i></el-button>
                         </template>
                     </el-popconfirm>
                 </template>
@@ -81,7 +76,7 @@
 
 <script>
 export default {
-    name: "File",
+    name: "UserUpload",
     data() {
         return {
             tableData: [],
@@ -89,19 +84,26 @@ export default {
             multipleSelection: [],
             pageNum: 1,
             pageSize: 10,
-            total: 0
+            total: 0,
+            user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+            userid: 0,
+            username: ''
         }
     },
     created() {
-        this.load()
+        this.request.get("http://localhost:9090/user/username/"+this.user.username).then(res =>{
+            this.userid=res.data.id
+            this.load()
+        })
     },
     methods: {
         load() {
-            this.request.get("http://localhost:9090/file/page", {
+            this.request.get("http://localhost:9090/file/page-user", {
                 params: {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     name: this.name,
+                    id: this.userid,
                 }
             }).then(res => {
                 this.tableData = res.data.records

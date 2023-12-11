@@ -10,8 +10,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import com.example.springboot.common.Constants;
 import com.example.springboot.common.Result;
+import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.Files;
 import com.example.springboot.mapper.FileMapper;
+import com.example.springboot.service.IFileService;
 import jakarta.servlet.ServletOutputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static com.baomidou.mybatisplus.extension.toolkit.Db.saveOrUpdate;
+
 /**
  * 文件上传相关接口
  */
@@ -37,6 +41,8 @@ public class FileController {
 
     @Resource
     private FileMapper fileMapper;
+    @Resource
+    private IFileService iFileService;
 
     /**
      * 文件上传接口
@@ -80,9 +86,67 @@ public class FileController {
         saveFile.setName(originalFilename);
         saveFile.setIsDelete(false);//设置默认的
         saveFile.setType(type);
+        saveFile.setEnable(false);
         saveFile.setSize(size/1024);
         saveFile.setUrl(url);
         saveFile.setMd5(md5);
+        saveFile.setCoinNumber(0);
+        saveFile.setLikeNumber(0);
+        saveFile.setStarNumber(0);
+        fileMapper.insert(saveFile);
+
+        return url;
+    }
+
+
+
+    @PostMapping("/upload-user")
+    public String uploadUser(@RequestParam MultipartFile file,
+                             @RequestParam  Integer id
+    ) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        String type = FileUtil.extName(originalFilename);
+        long size = file.getSize();
+
+        // 定义一个文件唯一的标识码
+        String uuid = IdUtil.fastSimpleUUID();
+        String fileUUID = uuid + StrUtil.DOT + type;
+
+        File uploadFile = new File(fileUploadPath + fileUUID);
+        // 判断配置的文件目录是否存在，若不存在则创建一个新的文件目录
+        File parentFile = uploadFile.getParentFile();
+        if(!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+
+        String url;
+        // 获取文件的md5
+        String md5 = SecureUtil.md5(file.getInputStream());
+        // 从数据库查询是否存在相同的记录
+        Files dbFiles = getFileByMd5(md5);
+        if (dbFiles != null) { // 文件已存在
+            url = dbFiles.getUrl();
+        } else {
+            // 上传文件到磁盘
+            file.transferTo(uploadFile);
+            // 数据库若不存在重复文件，则不删除刚才上传的文件
+            url = "http://localhost:9090/file/" + fileUUID;
+        }
+
+        // 存储数据库
+        Files saveFile = new Files();
+        saveFile.setName(originalFilename);
+        saveFile.setIsDelete(false);//设置默认的
+        saveFile.setType(type);
+        saveFile.setEnable(false);
+        saveFile.setSize(size/1024);
+        saveFile.setUrl(url);
+        saveFile.setMd5(md5);
+        saveFile.setCoinNumber(0);
+        saveFile.setLikeNumber(0);
+        saveFile.setStarNumber(0);
+
+        saveFile.setResourceUserId(id);
         fileMapper.insert(saveFile);
 
         return url;
@@ -173,7 +237,24 @@ public class FileController {
         QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
         // 查询未删除的记录
         queryWrapper.eq("is_delete", false);
+        queryWrapper.eq("type", "mp4");//是视频
         queryWrapper.orderByDesc("id");
+        if (!"".equals(name)) {
+            queryWrapper.like("name", name);
+        }
+        return Result.success(fileMapper.selectPage(new Page<>(pageNum, pageSize), queryWrapper));
+    }
+    @GetMapping("/page-user")
+    public Result findPageById(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String name,
+                           @RequestParam Integer id) {
+
+        QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
+        // 查询未删除的记录
+        queryWrapper.eq("is_delete", false);
+        queryWrapper.eq("type", "mp4");//是视频
+        queryWrapper.eq("resource_user_id",id);//根据用户id查视频
         if (!"".equals(name)) {
             queryWrapper.like("name", name);
         }
@@ -187,11 +268,17 @@ public class FileController {
         queryWrapper.eq("is_delete", false);
         queryWrapper.eq("resource_state", true);//审核通过的视频
         queryWrapper.eq("type", "mp4");//是视频
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("resource_id");
         if (!"".equals(name)) {
             queryWrapper.like("name", name);
         }
         return Result.success(fileMapper.selectList(queryWrapper));
     }
-
+    @PostMapping("/likevideo/{id}")
+    public Result likeVideo(@PathVariable Integer id) {
+        Files files = fileMapper.selectById(id);
+        files.setLikeNumber(files.getLikeNumber()+1);
+        iFileService.saveOrUpdate(files);
+        return Result.success();
+    }
 }

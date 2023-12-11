@@ -26,7 +26,7 @@
         <el-submenu index="2">
             <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span slot="title">管理</span>
+                <span slot="title">我的</span>
             </template>
             <el-menu-item index="/user">
                 <i class="el-icon-s-custom"></i>
@@ -35,6 +35,10 @@
             <el-menu-item index="/file">
                 <i class="el-icon-document"></i>
                 <span slot="title">文件管理</span>
+            </el-menu-item>
+            <el-menu-item index="/UserUpload">
+                <i class="el-icon-upload"></i>
+                <span slot="title">我的投稿</span>
             </el-menu-item>
         </el-submenu>
     </el-menu>

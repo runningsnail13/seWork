@@ -33,4 +33,16 @@ public class Files {
 
     @TableField(value = "upload_time")
     private LocalDateTime createTime;
+
+    @TableField(value = "resource_user_id")
+    private Integer resourceUserId;
+
+    @TableField(value = "like_number")
+    private Integer likeNumber;
+
+    @TableField(value = "star_number")
+    private Integer starNumber;
+
+    @TableField(value = "coin_number")
+    private Integer coinNumber;
 }

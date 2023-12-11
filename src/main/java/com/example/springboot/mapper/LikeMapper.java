@@ -1,7 +1,7 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.Like;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.springboot.entity.Likes;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author snail
  * @since 2023-12-09
  */
-public interface LikeMapper extends BaseMapper<Like> {
+public interface LikeMapper extends BaseMapper<Likes> {
 
 }

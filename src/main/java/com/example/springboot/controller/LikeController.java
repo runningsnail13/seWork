@@ -2,13 +2,14 @@ package com.example.springboot.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springboot.common.Result;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import com.example.springboot.service.ILikeService;
-import com.example.springboot.entity.Like;
+import com.example.springboot.entity.Likes;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,16 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-12-09
  */
 @RestController
-@RequestMapping("//like")
-        public class LikeController {
+@RequestMapping("/like")
+public class LikeController {
     
     @Resource
     private ILikeService likeService;
 
 // 新增或者更新
     @PostMapping
-    public boolean save(@RequestBody Like like) {
-        return likeService.saveOrUpdate(like);
+    public boolean save(@RequestBody Likes likes) {
+        return likeService.saveOrUpdate(likes);
         }
 
     @DeleteMapping("/{id}")
@@ -44,22 +45,41 @@ import org.springframework.web.bind.annotation.RestController;
     }
 
     @GetMapping
-    public List<Like> findAll() {
+    public List<Likes> findAll() {
         return likeService.list();
     }
 
     @GetMapping("/{id}")
-    public Like findOne(@PathVariable Integer id) {
+    public Likes findOne(@PathVariable Integer id) {
         return likeService.getById(id);
     }
 
+
+    @GetMapping("/tick")//用户的点赞行为
+    public Result tickCheckout(@RequestParam Integer resourceId, @RequestParam Integer userId) {
+        QueryWrapper<Likes> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("resource_id",resourceId);
+        queryWrapper.eq("user_id",userId);
+        Likes like = likeService.getOne(queryWrapper); // 查询是否存在该表项
+
+        if (like == null) {
+            // 如果不存在，则创建一个新的表项
+            like = new Likes();
+            like.setResourceId(resourceId);
+            like.setUserId(userId);
+            likeService.save(like);
+            return Result.success();
+        }
+        return Result.error();
+    }
+
     @GetMapping("/page")
-    public Page<Like> findPage(@RequestParam Integer pageNum,
+    public Page<Likes> findPage(@RequestParam Integer pageNum,
     @RequestParam Integer pageSize) {
-        QueryWrapper<Like> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Likes> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         return likeService.page(new Page<>(pageNum, pageSize), queryWrapper);
     }
 
-    }
+}
 
