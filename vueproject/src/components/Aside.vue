@@ -23,10 +23,28 @@
                 <span slot="title">主页</span>
             </template>
         </el-menu-item>
-        <el-submenu index="2">
+        <el-submenu index="2-1">
             <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span slot="title">我的</span>
+            </template>
+            <el-menu-item index="/UserUpload">
+                <i class="el-icon-upload"></i>
+                <span slot="title">我的投稿</span>
+            </el-menu-item>
+            <el-menu-item index="/LikeVideo">
+                <i class="el-icon-thumb"></i>
+                <span slot="title">点赞视频</span>
+            </el-menu-item>
+            <el-menu-item index="/im">
+                <i class="el-icon-chat-line-square"></i>
+                <span slot="title">聊天室</span>
+            </el-menu-item>
+        </el-submenu>
+        <el-submenu index="2-2">
+            <template slot="title">
+                <i class="el-icon-postcard"></i>
+                <span slot="title">管理</span>
             </template>
             <el-menu-item index="/user">
                 <i class="el-icon-s-custom"></i>
@@ -35,10 +53,6 @@
             <el-menu-item index="/file">
                 <i class="el-icon-document"></i>
                 <span slot="title">文件管理</span>
-            </el-menu-item>
-            <el-menu-item index="/UserUpload">
-                <i class="el-icon-upload"></i>
-                <span slot="title">我的投稿</span>
             </el-menu-item>
         </el-submenu>
     </el-menu>

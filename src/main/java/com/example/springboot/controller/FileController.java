@@ -281,4 +281,23 @@ public class FileController {
         iFileService.saveOrUpdate(files);
         return Result.success();
     }
+
+    @GetMapping("/like-videos-page")
+    public Result findPageByVideoId(@RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize,
+                               @RequestParam(defaultValue = "") String name,
+                               @RequestParam List<Integer> ids) {
+
+        QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
+        // 查询未删除的记录
+        queryWrapper.eq("is_delete", false);
+        queryWrapper.eq("type", "mp4");//是视频
+        if (!"".equals(name)) {
+            queryWrapper.like("name", name);
+        }
+        //查id
+        queryWrapper.in("resource_id",ids);
+        return Result.success(fileMapper.selectPage(new Page<>(pageNum, pageSize), queryWrapper));
+    }
+
 }

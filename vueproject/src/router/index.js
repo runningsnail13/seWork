@@ -16,7 +16,9 @@ const routes = [//路由配置指的是用户选择什么路径，浏览器就�
       {path: 'home', name: '首页', component: () => import('../views/Home.vue'),},
       {path: 'person', name: '个人信息', component: () => import('../views/Person.vue'),},
       {path: 'file', name: '投稿管理', component: () => import('../views/File.vue'),},
-      {path: 'userupload', name: '我的投稿', component: () => import('../views/UserUpload.vue'),}
+      {path: 'userupload', name: '我的投稿', component: () => import('../views/UserUpload.vue'),},
+      {path: 'im', name: '聊天', component: () => import("../views/Im.vue"),},
+      {path: 'likevideo', name: '点赞视频', component: () => import("../views/LikeVideo.vue"),},
     ]
   },
   {
@@ -42,11 +44,7 @@ const routes = [//路由配置指的是用户选择什么路径，浏览器就�
     name: 'admin',
     component: () => import('../views/admin.vue')
   },
-  {
-    path: '/im',
-    name: 'Im',
-    component: () => import("@/views/Im"),
-  },
+
 ]
 
 const router = new VueRouter({

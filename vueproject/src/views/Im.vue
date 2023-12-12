@@ -13,7 +13,7 @@
                 </el-card>
             </el-col>
             <el-col :span="16">
-                <div style="width: 800px; margin: 0 auto; background-color: white;
+                <div style="width: 700px; margin: 0 auto; background-color: white;
                     border-radius: 5px; box-shadow: 0 0 10px #ccc">
                     <div style="text-align: center; line-height: 50px;">
                         Web聊天室（{{ chatUser }}）
@@ -39,7 +39,7 @@ export default {
     data() {
         return {
             circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-            user: {},
+            user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
             isCollapse: false,
             users: [],
             chatUser: '',
@@ -106,6 +106,8 @@ export default {
         },
         init() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+            console.log(this.user)
+            this.circleUrl=this.user.avatarUrl;
             let username = this.user.username;
             let _this = this;
             if (typeof (WebSocket) == "undefined") {

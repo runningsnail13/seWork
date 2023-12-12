@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot.common.Result;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
@@ -79,6 +80,18 @@ public class LikeController {
         QueryWrapper<Likes> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         return likeService.page(new Page<>(pageNum, pageSize), queryWrapper);
+    }
+
+    @GetMapping("/findLikesByUserId/{userId}")
+    public List<Integer> findLikesByUserId(@PathVariable Integer userId) {
+        QueryWrapper<Likes> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userId);
+        List<Likes> tmp=likeService.list(queryWrapper);
+        List<Integer> ans=new ArrayList<>();
+        for(Likes i:tmp){
+            ans.add(i.getResourceId());
+        }
+        return ans;
     }
 
 }
