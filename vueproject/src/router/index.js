@@ -41,7 +41,12 @@ const routes = [//路由配置指的是用户选择什么路径，浏览器就�
     path: '/admin',
     name: 'admin',
     component: () => import('../views/admin.vue')
-  }
+  },
+  {
+    path: '/im',
+    name: 'Im',
+    component: () => import("@/views/Im"),
+  },
 ]
 
 const router = new VueRouter({

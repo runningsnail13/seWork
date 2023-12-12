@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -51,9 +56,8 @@
         <dependency>
             <groupId>com.github.jeffreyning</groupId>
             <artifactId>mybatisplus-plus</artifactId>
-            <version>1.5.1-RELEASE</version>
+            <version>1.7.4-RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
@@ -64,13 +68,13 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
         </dependency>
-<!--        &lt;!&ndash;swagger&ndash;&gt;-->
-<!--        &lt;!&ndash; Swagger &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash;swagger&ndash;&gt;-->
+        <!--        &lt;!&ndash; Swagger &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springfox</groupId>-->
+        <!--            <artifactId>springfox-boot-starter</artifactId>-->
+        <!--            <version>3.0.0</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -107,38 +111,14 @@
             <artifactId>assertj-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
-        <!--jodconverter 核心包 -->
-        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-core -->
         <dependency>
-            <groupId>org.jodconverter</groupId>
-            <artifactId>jodconverter-core</artifactId>
-            <version>4.2.2</version>
-        </dependency>
-
-        <!--springboot支持包，里面包括了自动配置类 -->
-        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-spring-boot-starter -->
-        <dependency>
-            <groupId>org.jodconverter</groupId>
-            <artifactId>jodconverter-spring-boot-starter</artifactId>
-            <version>4.2.2</version>
-        </dependency>
-
-        <!--jodconverter 本地支持包 -->
-        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-local -->
-        <dependency>
-            <groupId>org.jodconverter</groupId>
-            <artifactId>jodconverter-local</artifactId>
-            <version>4.2.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
